@@ -4,7 +4,6 @@ program bikestats;
 
 uses
   SysUtils, Classes,
-  FilenameUtils,
   Db, sqlite3, sqlite3ds,
   IdHttp,
   superobject;
@@ -19,7 +18,7 @@ procedure InitDb;
 var tables: TDataset;
   foundStations, foundSamples: boolean;
 begin
-  Db := TSqliteDb.Create(ChangeFileExt(AppFilename,'.db'));
+  Db := TSqliteDb.Create(ChangeFileExt(paramstr(0),'.db'));
   tables := Db.Query('SELECT name FROM sqlite_master WHERE type = "table"');
   foundStations := false;
   foundSamples := false;
@@ -50,14 +49,6 @@ begin
     response := TMemoryStream.Create;
     http.Get(url, response);
     SetString(Result, PAnsiChar(response.Memory), response.Size);
-
-  {
-    HTTP.Request.ContentType := 'text/xml; charset=utf-8';
-    HTTP.Request.ContentEncoding := 'utf-8';
-    HTTP.HTTPOptions := [hoForceEncodeParams];
-    HTTP.Request.CharSet := 'utf-8';
-  }
-
   finally
     FreeAndNil(http);
     FreeAndNil(response);
