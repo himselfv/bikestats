@@ -11,6 +11,9 @@ __history
 *.dproj
 *.bdsproj
 
+# Visual Studio local files
+*.suo
+
 # Binaries
 *.exe
 *.zip
@@ -20,3 +23,4 @@ __history
 # Release
 Win32/*
 Win64/*
+*.db
